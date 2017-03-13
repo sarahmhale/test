@@ -28,10 +28,16 @@ public class TypController {
 	@ResponseBody
 	public String fetchTyper(Model model){
 		model.addAttribute("typer", typRepository.findAll());
-		return "/typer";
+		return "/delar";
 		
 	}
-
+	@RequestMapping( value = "/{typNamn}", method = RequestMethod.GET)
+	public HttpEntity<Typ> getInfoForTyp(@PathVariable("typNamn") String typNamn){
+		
+		Typ typ = typRepository.findByName(typNamn);
+		return new ResponseEntity<>(typ, HttpStatus.OK);
+		
+	}
 	@RequestMapping(value = "/{name}", method = RequestMethod.PUT)
 	public @ResponseBody Typ updateTyp(@PathVariable("name") String name,
 			@RequestBody Typ typ){

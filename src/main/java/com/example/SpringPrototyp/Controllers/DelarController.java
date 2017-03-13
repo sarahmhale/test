@@ -3,6 +3,9 @@ package com.example.SpringPrototyp.Controllers;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -36,6 +39,11 @@ public class DelarController {
 		
 		return del;
 		
+	}
+	@RequestMapping(value = "/{delNamn}",method = RequestMethod.GET)
+	@ResponseBody
+	public HttpEntity<Del> getDelTypes(@PathVariable("delNamn") String delNamn){
+		return new ResponseEntity<>(repository.findByName(delNamn), HttpStatus.OK);
 	}
 
 }

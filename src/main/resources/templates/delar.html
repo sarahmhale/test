@@ -42,7 +42,7 @@
 							Välj typ <span class="caret"></span>
 						</button>
 						<ul class="dropdown-menu" role="menu" aria-labelledby="menu1" >
-							<li th:each="item : ${delar.getTypNamn()}"><a role="menuitem" tabindex="-1" data-th-text="${item}"></a></li>
+							<li th:each="item : ${delar.getTypNamn()}"><a role="menuitem" tabindex="-1" data-th-text="${item}" data-th-href="@{|/delar/typer/${item}|}"></a></li>
 						</ul>
 					</div>
 
