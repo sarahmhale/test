@@ -1,0 +1,48 @@
+<html Layout:decorator="layout">
+<div Layout:fragment="content">
+
+	<table class="table " id="del_list">
+		<thead>
+			<tr>
+				<th>Del</th>
+				<th>Typ</th>
+				<th>Yta</th>
+				<th>Enhet</th>
+				<th>Hantverkare</th>
+				<th>Intervall år</th>
+				<th>Senast återgärd</th>
+				<th>Material</th>
+				<th>Kostnad</th>
+				<th>Kommentar</th>
+
+			</tr>
+		</thead>
+		<tbody>
+			<tr data-th-each="delar: ${delar}">
+				<td data-th-text="${delar.getName()}"></td>
+				 <td>
+					<div class="dropdown">
+						<button class="btn btn-default dropdown-toggle" type="button"
+							data-toggle="dropdown">
+							Välj typ <span class="caret"></span>
+						</button>
+						<ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
+							<li data-th-each="item : ${delar.getTypNamn()}"><a
+								role="menuitem" tabindex="-1" data-th-text="${item}"
+								href="/delar/typer/item.get"></a></li>
+						</ul>
+					</div> 
+
+				</td>
+				<td><input class="form-control" id="ex2" type="text"></input></td>
+				<td></td>
+				<td><input type="checkbox" value=""></input></td>
+
+			</tr>
+
+		</tbody>
+	</table>
+	<a class="btn btn-primary" href="/delar/new"> Summera</a>
+</div>
+
+</html>
