@@ -77,7 +77,7 @@
 		</table>
 		<div class="text-right" >
 		
-			<a class="btn btn-success" data-th-href="@{/delar/new(delNamn='hello',typNamn='user',chbox=true)}"> Lägg till</a>
+			<a class="btn btn-success" data-th-href="@{/delar/new}"> Lägg till</a>
 		</div>
 
 	</div>
@@ -100,11 +100,11 @@
 
 				</tr>
 			</thead>
-			<tbody th:if="${session.basketitem!=null}">
+			<tbody th:if="${session.basketitems!=null}">
 			<p>its here</p>
-				<tr th:each="item: ${#session.getAttribute('basketitem')}">
-					<td th:text="@{item.getDelNamn}"></td>
-					<td></td>
+				<tr th:each="item: ${session.basketitems}">
+					<td th:text="${item.getDelNamn()}"></td>
+					<td th:text="${item.getTypNamn()}"></td>
 					<td></td>
 					<td></td>
 					<td></td>

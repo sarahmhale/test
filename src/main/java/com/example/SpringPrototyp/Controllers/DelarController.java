@@ -52,36 +52,40 @@ public class DelarController {
 	
 		if(repository.findByName(delNamn)!=null){
 			model.addAttribute("del", repository.findByName(delNamn));
-			//session.setAttribute("del", repository.findByName(delNamn));
+			session.setAttribute("delen", delNamn);
 		}
 	
 		return "/delar";
 	}
 	
 	@RequestMapping(value = "/new", method = RequestMethod.GET)
-    public String addToBasket(@RequestParam("delNamn") String delNamn, @RequestParam("typNamn") String typNamn,
-            @RequestParam("chbox") Boolean checkbox, Model model, HttpSession session) {
+    public String addToBasket(HttpSession session) {
 		
-        model.addAttribute("delar", repository.findAll());
-        System.out.println("addbasket"+delNamn+typNamn);
-      
+		if(session.getAttribute("delen")!= null){
+		
         // check if basketitems already in session. if not create empty list and add to session
         if (session.getAttribute("basketitems") == null ) {
+       
             List<BasketItem> basketItems = new ArrayList<BasketItem>();
             session.setAttribute("basketitems", basketItems);
         }
       
         // create the basket item from the form values
         BasketItem item = new BasketItem();
-        item.setCheckbox(checkbox);
-        item.setDelNamn(delNamn);
-        item.setTypNamn(typNamn);
+        //item.setCheckbox(checkbox);
+        item.setDelNamn((String)session.getAttribute("delen"));
+        session.removeAttribute("delen");
+       // item.setTypNamn(typNamn);
+        
         
         //add the basket item to the list in the session
         List<BasketItem> basketItems = (List<BasketItem>) session.getAttribute("basketitems") ;
         basketItems.add(item);
-        System.out.println(session.getAttribute("basketitem"));
-        return "/delar";
+		}
+		else{
+			System.out.println("something wrong in the addbasket");
+		}
+        return "redirect:/delar";
     }
     
 
