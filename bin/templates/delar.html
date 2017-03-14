@@ -13,70 +13,73 @@
 
 </head>
 <body>
-
 	<div class="container">
-		<div class="dropdown">
-			<h2>Delar</h2>
-			<button class="btn btn-default dropdown-toggle" type="button"
-				data-toggle="dropdown">
-				Välj del <span class="caret"></span>
-			</button>
-			<ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
-				<li th:each="item : ${delar}"><a role="menuitem" tabindex="-1"
-					data-th-text="${item.name}" data-th-href="@{|delar/${item.name}|}"></a></li>
-			</ul>
-		</div>
 
-		
-		<!--  <table class="table " id="del_list">
-		<thead>
-			<tr>
-				<th>Del</th>
-				<th>Typ</th>
-				<th>Yta</th>
-				<th>Enhet</th>
-				<th>Hantverkare</th>
-				<th>Intervall år</th>
-				<th>Senast återgärd</th>
-				<th>Material</th>
-				<th>Kostnad</th>
-				<th>Kommentar</th>
+		<table class="table " id="del_list">
+			<thead>
+				<tr>
+					<th>Del</th>
+					<th>Typ</th>
+					<th>Yta</th>
+					<th>Enhet</th>
+					<th>Hantverkare</th>
+					<th>Intervall år</th>
+					<th>Senast återgärd</th>
+					<th>Material</th>
+					<th>Kostnad</th>
+					<th>Kommentar</th>
 
-			</tr>
-		</thead>
-		<tbody>
-			<tr data-th-each="delar: ${delar}">
-				<td data-th-text="${delar.getName()}"></td>
-				<td>
-					<div class="dropdown">
-						<button class="btn btn-default dropdown-toggle" type="button"
-							data-toggle="dropdown">
-							Välj typ <span class="caret"></span>
-						</button>
-						<ul class="dropdown-menu" role="menu" aria-labelledby="menu1" >
-							<li th:each="item : ${delar.getTypNamn()}"><a role="menuitem" tabindex="-1" data-th-text="${item}" data-th-href="@{|/typer/${item}|}"></a></li>
-						</ul>
-					</div>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>
+						<div class="dropdown">
 
-				</td>
-				<td><input class="form-control" id="ex2" type="text"></input></td>	
-				<td><p th:text="${typer.name}" th:unless="${typer==null}"></p> </td>
-				<td><input type="checkbox" value=""></input></td>
+							<button class="btn btn-default dropdown-toggle" type="button"
+								data-toggle="dropdown">
+								Välj del <span class="caret"></span>
+							</button>
+							<ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
+								<li th:each="item : ${delar}"><a role="menuitem"
+									tabindex="-1" data-th-text="${item.name}"
+									data-th-href="@{|delar/${item.name}|}"></a></li>
+							</ul>
+						</div>
 
-			</tr>
+					</td>
+					<td>
+						<div class="dropdown">
 
-		</tbody>
-	</table>-->
-		<p th:text="${del.getName()}" th:unless="${del==null}"></p>
-		<div th:if="${del != null}">
-			<li th:each="a: ${del.getTypNamn()}" th:unless="${del==null}"
-				th:text="${a}"></li>
+							<button class="btn btn-default dropdown-toggle" type="button"
+								data-toggle="dropdown">
+								Välj del <span class="caret"></span>
+							</button>
+							<ul class="dropdown-menu" role="menu" aria-labelledby="menu1"
+								th:if="${del != null}">
+								<li th:each="a: ${del.getTypNamn()}" th:unless="${del==null}"><a
+									role="menuitem" tabindex="-1" data-th-text="${a}"
+									data-th-href="@{|typer/${a}|}"></a></li>
+							</ul>
+						</div>
+					</td>
+					<td><input class="form-control" id="ex2" type="text"></input></td>
+					<td><p th:text="${typer.enhet}" th:unless="${typer==null}"></p>
+					</td>
+					<td><input type="checkbox" value=""></input></td>
+					<td><p th:text="${typer.intervallAr}"
+							th:unless="${typer==null}"></p></td>
+					<td></td>
+					<td><p th:text="${typer.materialInklMoms}"
+							th:unless="${typer==null}"></p></td>
+				</tr>
 
-		</div>
+			</tbody>
+		</table>
 
-
-
-		<a class="btn btn-primary" href="/delar/new"> Summera</a>
 	</div>
+
+	<a class="btn btn-primary" href="/delar/new"> Summera</a>
+
 </body>
 </html>

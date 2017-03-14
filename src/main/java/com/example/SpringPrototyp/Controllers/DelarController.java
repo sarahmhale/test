@@ -20,7 +20,7 @@ import com.example.SpringPrototyp.Components.DelRepository;
 
 @Controller
 @RequestMapping("/delar")
-@SessionAttributes("del")
+@SessionAttributes({"del","typer"})
 public class DelarController {
 	
 	@Autowired
@@ -44,13 +44,11 @@ public class DelarController {
 	
 	@RequestMapping(value = "/{delNamn}",method = RequestMethod.GET)
 	public String getDelTypes(@PathVariable("delNamn") String delNamn,Model model){
-		System.out.println("here");
-		
+	
 		if(repository.findByName(delNamn)!=null){
 		model.addAttribute("del", repository.findByName(delNamn));
 		}
-		System.out.println(model.containsAttribute("del"));
-		
+	
 		return "/delar";
 	}
 
