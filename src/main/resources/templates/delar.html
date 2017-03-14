@@ -35,7 +35,6 @@
 				<tr>
 					<td>
 						<div class="dropdown">
-
 							<button class="btn btn-default dropdown-toggle" type="button"
 								data-toggle="dropdown">
 								Välj del <span class="caret"></span>
@@ -76,8 +75,9 @@
 
 			</tbody>
 		</table>
-		<div class="text-right">
-			<a class="btn btn-success" href="/delar/new"> Lägg till</a>
+		<div class="text-right" >
+		
+			<a class="btn btn-success" data-th-href="@{/delar/new(delNamn='hello',typNamn='user',chbox=true)}"> Lägg till</a>
 		</div>
 
 	</div>
@@ -100,9 +100,10 @@
 
 				</tr>
 			</thead>
-			<tbody>
-				<tr>
-					<td></td>
+			<tbody th:if="${session.basketitem!=null}">
+			<p>its here</p>
+				<tr th:each="item: ${#session.getAttribute('basketitem')}">
+					<td th:text="@{item.getDelNamn}"></td>
 					<td></td>
 					<td></td>
 					<td></td>

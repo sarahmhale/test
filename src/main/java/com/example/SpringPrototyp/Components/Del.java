@@ -1,4 +1,4 @@
-package com.example.SpringPrototyp.Components;
+	package com.example.SpringPrototyp.Components;
 
 import java.util.List;
 

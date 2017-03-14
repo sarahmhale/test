@@ -32,5 +32,6 @@ dependencies {
 	testCompile('org.springframework.boot:spring-boot-starter-test')
 	compile('org.springframework.boot:spring-boot-starter-data-mongodb')
 	compile('org.springframework.boot:spring-boot-devtools')
+	compile group: 'org.springframework.session', name: 'spring-session', version: '1.0.0.RELEASE'
 
 }
