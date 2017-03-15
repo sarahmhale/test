@@ -15,70 +15,87 @@
 <body>
 	<div class="container">
 		<h1>Inmatning</h1>
-		<table class="table " id="del_list">
-			<thead>
-				<tr>
-					<th>Del</th>
-					<th>Typ</th>
-					<th>Yta</th>
-					<th>Enhet</th>
-					<th>Hantverkare</th>
-					<th>Intervall år</th>
-					<th>Senast återgärd</th>
-					<th>Material kostnad</th>
-					<th>Kommentar</th>
+		<form action="#" th:action="@{/new}" th:object="${basketitem}"
+			method="get">
+			<table class="table " id="del_list">
+				<thead>
+					<tr>
+						<th>Del</th>
+						<th>Typ</th>
+						<th>Yta</th>
+						<th>Enhet</th>
+						<th>Hantverkare</th>
+						<th>Intervall år</th>
+						<th>Senast återgärd</th>
+						<th>Material kostnad</th>
+						<th>Kommentar</th>
 
-				</tr>
-			</thead>
-			<tbody>
-				<tr>
-					<td>
-						<div class="dropdown">
-							<button class="btn btn-default dropdown-toggle" type="button"
-								data-toggle="dropdown">
-								Välj del <span class="caret"></span>
-							</button>
-							<ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
-								<li th:each="item : ${delar}"><a role="menuitem"
-									tabindex="-1" data-th-text="${item.name}"
-									data-th-href="@{|delar/${item.name}|}"></a></li>
-							</ul>
-						</div>
+					</tr>
+				</thead>
 
-					</td>
-					<td>
-						<div class="dropdown">
+				<tbody>
 
-							<button class="btn btn-default dropdown-toggle" type="button"
-								data-toggle="dropdown">
-								Välj del <span class="caret"></span>
-							</button>
-							<ul class="dropdown-menu" role="menu" aria-labelledby="menu1"
-								th:if="${del != null}">
-								<li th:each="a: ${del.getTypNamn()}" th:unless="${del==null}"><a
-									role="menuitem" tabindex="-1" data-th-text="${a}"
-									data-th-href="@{|typer/${a}|}"></a></li>
-							</ul>
-						</div>
-					</td>
-					<td><input class="form-control" id="ex2" type="text"></input></td>
-					<td><p th:text="${typer.enhet}" th:unless="${typer==null}"></p>
-					</td>
-					<td><input type="checkbox" value=""></input></td>
-					<td><p th:text="${typer.intervallAr}"
-							th:unless="${typer==null}"></p></td>
-					<td></td>
-					<td><p th:text="${typer.materialInklMoms}"
-							th:unless="${typer==null}"></p></td>
-				</tr>
+					<tr>
 
-			</tbody>
-		</table>
-		<div class="text-right" >
-		
-			<a class="btn btn-success" data-th-href="@{/delar/new}"> Lägg till</a>
-		</div>
+						<td><!-- Del drop down -->
+							<div class="dropdown">
+								<button class="btn btn-default dropdown-toggle" type="button"
+									data-toggle="dropdown">
+									Välj del <span class="caret"></span>
+								</button>
+								<ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
+									<li th:each="item : ${session.delar}"><a role="menuitem"
+										tabindex="-1" data-th-text="${item.name}"
+										data-th-href="@{|delar/${item.name}|}"></a></li>
+								</ul>
 
+							</div>
+							<h5 th:text="${session.del}"></h5>
+
+						</td>
+						<td><!-- Typ dropdown -->
+							<div class="dropdown">
+
+								<button class="btn btn-default dropdown-toggle" type="button"
+									data-toggle="dropdown">
+									Välj del <span class="caret"></span>
+								</button>
+								<ul class="dropdown-menu" role="menu" aria-labelledby="menu1"
+									th:if="${del != null}">
+									<li th:each="a: ${del.getTypNamn()}" th:unless="${del==null}"><a
+										role="menuitem" tabindex="-1" data-th-text="${a}"
+										data-th-href="@{|typer/${a}|}"></a></li>
+								</ul>
+							</div>
+
+							<h5 th:text="${session.typ	}"></h5>
+
+						</td>
+						
+						<td><input class="form-control" id="ex2" type="text"
+							th:field="*{yta}"></input></td>
+						<td><p th:text="${typer.enhet}" th:unless="${typer==null}"></p>
+						</td>
+						<td><input type="checkbox" th:field="*{chbox}"></input></td>
+						<td><p th:text="${typer.intervallAr}"
+								th:unless="${typer==null}"></p></td>
+						<td></td>
+						<td><p th:text="${typer.materialInklMoms}"
+								th:unless="${typer==null}"></p></td>
+
+
+					</tr>
+
+
+				</tbody>
+
+			</table>
+			<div class="text-right">
+
+				<input type="submit" value="Submit"></input>
+
+			</div>
+		</form>
 	</div>
 
 	<div class="container">
@@ -100,13 +117,12 @@
 				</tr>
 			</thead>
 			<tbody th:if="${session.basketitems!=null}">
-			<p>its here</p>
 				<tr th:each="item: ${session.basketitems}">
 					<td th:text="${item.getDelNamn()}"></td>
 					<td th:text="${item.getTypNamn()}"></td>
+					<td th:text="${item.getYta()}"></td>
 					<td></td>
-					<td></td>
-					<td></td>
+					<td th:text="${item.getChbox()}"></td>
 					<td></td>
 					<td></td>
 					<td></td>

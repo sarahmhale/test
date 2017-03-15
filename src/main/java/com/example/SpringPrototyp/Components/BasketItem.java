@@ -4,7 +4,21 @@ public class BasketItem {
 	
     String delNamn;
     String typNamn;
-    Boolean checkbox;
+    String yta;
+    Boolean chbox;
+    public Boolean getChbox() {
+		return chbox;
+	}
+	public void setChbox(Boolean chbox) {
+		this.chbox = chbox;
+	}
+	public String getYta() {
+		return yta;
+	}
+	public void setYta(String yta) {
+		this.yta = yta;
+	}
+	Boolean checkbox;
     
     public String getDelNamn() {
         return delNamn;

@@ -1,6 +1,8 @@
 package com.example.SpringPrototyp.Controllers;
 
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.stereotype.Controller;
@@ -12,12 +14,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
+import com.example.SpringPrototyp.Components.BasketItem;
 import com.example.SpringPrototyp.Components.Typ;
 import com.example.SpringPrototyp.Components.TypRepository;
 
 
 @Controller
-@SessionAttributes({"del","typer"})
+
 @RequestMapping("/delar/typer")
 public class TypController {
 
@@ -32,11 +35,13 @@ public class TypController {
 
 	}
 	@RequestMapping( value = "/{typNamn}", method = RequestMethod.GET)
-	public String getInfoForTyp(@PathVariable("typNamn") String typNamn, Model model){
-		System.out.println("here");
+	public String getInfoForTyp(@PathVariable("typNamn") String typNamn, Model model,HttpSession session){
 		
+		
+		model.addAttribute("basketitem", new BasketItem());
 		if(typRepository.findByName(typNamn)!= null){
 			model.addAttribute("typer",typRepository.findByName(typNamn));
+			session.setAttribute("typ", typNamn);
 		}
 		System.out.println(model.containsAttribute("typer"));
 		
