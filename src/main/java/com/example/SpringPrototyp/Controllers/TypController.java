@@ -21,7 +21,7 @@ import com.example.SpringPrototyp.Components.TypRepository;
 
 @Controller
 
-@RequestMapping("/delar/typer")
+@RequestMapping("/typer")
 public class TypController {
 
 	@Autowired
@@ -36,12 +36,15 @@ public class TypController {
 	}
 	@RequestMapping( value = "/{typNamn}", method = RequestMethod.GET)
 	public String getInfoForTyp(@PathVariable("typNamn") String typNamn, Model model,HttpSession session){
-		
+		System.out.println("typnamn: "+ typNamn);
 		
 		model.addAttribute("basketitem", new BasketItem());
 		if(typRepository.findByName(typNamn)!= null){
 			model.addAttribute("typer",typRepository.findByName(typNamn));
-			session.setAttribute("typ", typNamn);
+			session.setAttribute("typInfo", typRepository.findByName(typNamn) );
+			session.setAttribute("typ", typNamn );
+			
+			
 		}
 		System.out.println(model.containsAttribute("typer"));
 		

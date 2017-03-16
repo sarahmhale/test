@@ -4,18 +4,62 @@ public class BasketItem {
 	
     String delNamn;
     String typNamn;
-    String yta;
-    Boolean chbox;
-    public Boolean getChbox() {
+    Integer yta;
+    Boolean chbox = false;
+    Typ typ;
+    Integer aPris;
+    Integer kostnad;
+    Business business = new Business();
+    
+    public BasketItem(){
+    	
+    }
+    
+    public BasketItem(String delNamn, String typNamn, Integer yta,  Typ typ ) {
+
+		this.delNamn = delNamn;
+		this.typNamn = typNamn;
+		this.yta = yta;
+		this.typ = typ;
+
+	}
+
+    public Integer getApris(){
+    	
+    	if(this.chbox){
+    		this.aPris= business.SumAPrisWithHantverkare(typ);
+    	}
+    	else{
+    		this.aPris = business.SumAPrisWithoutHantverkare(typ);
+    	}
+    	return this.aPris;
+    }
+    
+    public Integer getKostnad(){
+    	if(this.chbox){
+    	this.kostnad=this.business.SumTotalKostnadWithHantverkare(yta, typ);
+    	}
+    	else{
+    		this.kostnad=this.business.SumTotalKostnadWithoutHantverkare(yta, typ);
+    	}
+    	return this.kostnad;
+    }
+    public Typ getTyp() {
+		return typ;
+	}
+	public void setTyp(Typ typ) {
+		this.typ = typ;
+	}
+	public Boolean getChbox() {
 		return chbox;
 	}
 	public void setChbox(Boolean chbox) {
 		this.chbox = chbox;
 	}
-	public String getYta() {
+	public Integer getYta() {
 		return yta;
 	}
-	public void setYta(String yta) {
+	public void setYta(Integer yta) {
 		this.yta = yta;
 	}
 	Boolean checkbox;

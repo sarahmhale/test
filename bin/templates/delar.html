@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head th:fragment="header">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<title>Insert title here</title>
+<title>Bo I Norr</title>
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"></link>
 <script
@@ -21,7 +21,7 @@
 				<thead>
 					<tr>
 						<th>Del</th>
-						<th>Typ</th>
+						<th>Typ/antal</th>
 						<th>Yta</th>
 						<th>Enhet</th>
 						<th>Hantverkare</th>
@@ -37,7 +37,8 @@
 
 					<tr>
 
-						<td><!-- Del drop down -->
+						<td>
+							<!-- Del drop down -->
 							<div class="dropdown">
 								<button class="btn btn-default dropdown-toggle" type="button"
 									data-toggle="dropdown">
@@ -46,14 +47,15 @@
 								<ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
 									<li th:each="item : ${session.delar}"><a role="menuitem"
 										tabindex="-1" data-th-text="${item.name}"
-										data-th-href="@{|delar/${item.name}|}"></a></li>
+										data-th-href="@{|/${item.name}|}"></a></li>
 								</ul>
 
 							</div>
 							<h5 th:text="${session.del}"></h5>
 
 						</td>
-						<td><!-- Typ dropdown -->
+						<td>
+							<!-- Typ dropdown -->
 							<div class="dropdown">
 
 								<button class="btn btn-default dropdown-toggle" type="button"
@@ -68,11 +70,11 @@
 								</ul>
 							</div>
 
-							<h5 th:text="${session.typ	}"></h5>
+							<h5 th:text="${session.typ}"></h5>
 
 						</td>
-						
-						<td><input class="form-control" id="ex2" type="text"
+
+						<td><input class="form-control" id="ex2" type="number"
 							th:field="*{yta}"></input></td>
 						<td><p th:text="${typer.enhet}" th:unless="${typer==null}"></p>
 						</td>
@@ -82,7 +84,7 @@
 						<td></td>
 						<td><p th:text="${typer.materialInklMoms}"
 								th:unless="${typer==null}"></p></td>
-
+						<td th:text="${typer.getKommentar()}" th:unless="${typer==null}"></td>
 
 					</tr>
 
@@ -92,7 +94,7 @@
 			</table>
 			<div class="text-right">
 
-				<input type="submit" value="Submit"></input>
+				<input type="submit" value="Lägg till" class="btn btn-success"></input>
 
 			</div>
 		</form>
@@ -100,18 +102,18 @@
 
 	<div class="container">
 		<h1>Din besiktning</h1>
-		<table class="table " id="del_list">
+		<table class="table table-striped " id="del_list">
 			<thead>
 				<tr>
 					<th>Del</th>
 					<th>Typ</th>
-					<th>Yta</th>
-					<th>Enhet</th>
+					<th>Yta/antal</th>
 					<th>Hantverkare</th>
-					<th>Intervall år</th>
-					<th>Senast återgärd</th>
-					<th>Material</th>
+					<th>A'pris</th>
 					<th>Kostnad</th>
+					<th>Intervall</th>
+					<th>Senast återgärd</th>
+					<th>Planerat åtgärdsår</th>
 					<th>Kommentar</th>
 
 				</tr>
@@ -120,12 +122,15 @@
 				<tr th:each="item: ${session.basketitems}">
 					<td th:text="${item.getDelNamn()}"></td>
 					<td th:text="${item.getTypNamn()}"></td>
-					<td th:text="${item.getYta()}"></td>
-					<td></td>
+					<td th:text="${item.getYta() + item.getTyp().getEnhet()}"></td>
+					
 					<td th:text="${item.getChbox()}"></td>
+					<td th:text="${item.getApris()+ ' kr/' + item.getTyp().getEnhet()}"></td>
+					<td th:text="${item.getKostnad()+ ' kr/' + item.getTyp().getEnhet()}"></td>
+					<td th:text="${item.getTyp().getIntervallAr()}"></td>
 					<td></td>
 					<td></td>
-					<td></td>
+					<td th:text="${item.getTyp().getKommentar()}"></td>
 				</tr>
 
 			</tbody>

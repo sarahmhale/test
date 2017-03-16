@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.example.SpringPrototyp.Components.BasketItem;
 import com.example.SpringPrototyp.Components.Del;
 import com.example.SpringPrototyp.Components.DelRepository;
+import com.example.SpringPrototyp.Components.Typ;
 
 
 
@@ -29,18 +30,16 @@ public class DelarController {
 
 	@Autowired
 	private DelRepository repository;
-	
 
-	@RequestMapping(value="/delar", method = RequestMethod.GET)
+
+	@RequestMapping(value="", method = RequestMethod.GET)
 	public String listDelar(Model model, HttpSession session){
 		model.addAttribute("basketitem", new BasketItem());
 		session.setAttribute("delar", repository.findAll());
-		
-	
 
 		return "/delar";	
 	}
-	@RequestMapping(value = "/delar/{name}", method = RequestMethod.PUT)
+	@RequestMapping(value = "/{name}", method = RequestMethod.PUT)
 	public @ResponseBody Del updateDel(@PathVariable("name") String name,
 			@RequestBody List<String> typNamn){
 
@@ -51,10 +50,16 @@ public class DelarController {
 
 	}
 
-	@RequestMapping(value = "/delar/{delNamn}",method = RequestMethod.GET)
+	@RequestMapping(value = "/delete/{name}", method = RequestMethod.GET)
+	public @ResponseBody void deleteDel(@PathVariable("name") String name){
+		Del del = repository.findByName(name);
+		repository.delete(del.getId());
+
+	}
+
+	@RequestMapping(value = "/{delNamn}",method = RequestMethod.GET)
 	public String getDelTypes(@PathVariable("delNamn") String delNamn,HttpSession session,Model model){
 		model.addAttribute("basketitem", new BasketItem());
-		
 
 		if(repository.findByName(delNamn) !=null ){
 			model.addAttribute("del", repository.findByName(delNamn));
@@ -66,35 +71,30 @@ public class DelarController {
 
 
 	@RequestMapping(value = "/new", method = RequestMethod.GET)
-	public String addToBasket(@RequestParam("yta") String yta, @RequestParam(value="chbox" , required=false) boolean checkbox,HttpSession session) {
-
-	
-
-			// check if basketitems already in session. if not create empty list and add to session
-			if (session.getAttribute("basketitems") == null ) {
-
-				List<BasketItem> basketItems = new ArrayList<BasketItem>();
-				session.setAttribute("basketitems", basketItems);
-			}
-
-			// create the basket item from the form values
-			BasketItem item = new BasketItem();
-			item.setChbox(checkbox);
-			item.setDelNamn((String)session.getAttribute("del"));
-			item.setTypNamn((String)session.getAttribute("typ"));
-			item.setYta(yta);
-			session.removeAttribute("del");
-			session.removeAttribute("typ");
-			// item.setTypNamn(typNamn);
+	public String addToBasket(@RequestParam("yta") Integer yta, @RequestParam(value="chbox" , required=false) boolean checkbox,HttpSession session) {
 
 
-			//add the basket item to the list in the session
-			List<BasketItem> basketItems = (List<BasketItem>) session.getAttribute("basketitems") ;
-			basketItems.add(item);
+		// check if basketitems already in session. if not create empty list and add to session
+		if (session.getAttribute("basketitems") == null ) {
 
-		
+			List<BasketItem> basketItems = new ArrayList<BasketItem>();
+			session.setAttribute("basketitems", basketItems);
+		}
+		Typ typ= (Typ) session.getAttribute("typInfo");
+
+		// create the basket item from the form values
+		BasketItem item = new BasketItem((String)session.getAttribute("del"),typ.getName(),yta,typ);
+		item.setChbox(checkbox);	
+
+		session.removeAttribute("del");
+		session.removeAttribute("typ");
+
+		//add the basket item to the list in the session
+		List<BasketItem> basketItems = (List<BasketItem>) session.getAttribute("basketitems") ;
+		basketItems.add(item);
+
+
 		return "redirect:/delar";
 	}
-
 
 }
