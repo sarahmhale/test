@@ -19,9 +19,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.example.SpringPrototyp.Components.BasketItem;
 import com.example.SpringPrototyp.Components.Del;
-import com.example.SpringPrototyp.Components.DelRepository;
 import com.example.SpringPrototyp.Components.Typ;
-
+import com.example.SpringPrototyp.Repositories.DelRepository;
 
 
 @Controller
@@ -40,8 +39,9 @@ public class DelarController {
 
 		return "/delar";	
 	}
+	
 	@RequestMapping(value = "/{name}", method = RequestMethod.PUT)
-	public @ResponseBody Del updateDel(@PathVariable("name") String name,
+	public @ResponseBody Del addDel(@PathVariable("name") String name,
 			@RequestBody List<String> typNamn){
 
 		Del del = new Del(name, typNamn);
@@ -58,19 +58,16 @@ public class DelarController {
 
 	}*/
 
+	//Deletes basketitem from the http session. 
+	
 	@RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
 	public String deleteDel(@PathVariable("id") String id,HttpSession session){
-		System.out.println(id);
-
-		List<BasketItem> basketItems = (List<BasketItem>) session.getAttribute("basketitems");
-		System.out.println(basketItems.size());
-		basketItems.remove(Integer.parseInt(id));
 		
-		System.out.println(basketItems.size());
-
+		List<BasketItem> basketItems = (List<BasketItem>) session.getAttribute("basketitems");
+		
+		basketItems.remove(Integer.parseInt(id));
 		session.removeAttribute("basketitems");
 
-		//session.setAttribute("basketitems", basketItems);
 		counterID--;
 		
 		return "redirect:/delar";
@@ -94,7 +91,6 @@ public class DelarController {
 	@RequestMapping(value = "/new", method = RequestMethod.GET)
 	public String addToBasket(@RequestParam("yta") Integer yta, @RequestParam(value="chbox" , required=false) boolean checkbox,HttpSession session) {
 
-
 		// check if basketitems already in session. if not create empty list and add to session
 		if (session.getAttribute("basketitems") == null ) {
 
@@ -107,10 +103,10 @@ public class DelarController {
 		BasketItem item = new BasketItem((String)session.getAttribute("del"),typ.getName(),yta,typ);
 		item.setChbox(checkbox);	
 		item.setId(counterID);
-		counterID++;
 		session.removeAttribute("del");
 		session.removeAttribute("typ");
-
+		counterID++;
+		
 		//add the basket item to the list in the session
 		List<BasketItem> basketItems = (List<BasketItem>) session.getAttribute("basketitems") ;
 		basketItems.add(item);

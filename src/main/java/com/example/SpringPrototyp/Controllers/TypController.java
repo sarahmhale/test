@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.example.SpringPrototyp.Components.BasketItem;
 import com.example.SpringPrototyp.Components.Typ;
-import com.example.SpringPrototyp.Components.TypRepository;
+import com.example.SpringPrototyp.Repositories.TypRepository;
 
 
 @Controller
@@ -44,13 +44,13 @@ public class TypController {
 			session.setAttribute("typInfo", typRepository.findByName(typNamn) );
 			session.setAttribute("typ", typNamn );
 			
-			
 		}
 		System.out.println(model.containsAttribute("typer"));
 		
 		return "/delar";
 
 	}
+	
 	@RequestMapping(value = "/{name}", method = RequestMethod.PUT)
 	public @ResponseBody Typ updateTyp(@PathVariable("name") String name,
 			@RequestBody Typ typ){

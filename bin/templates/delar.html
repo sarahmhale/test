@@ -75,7 +75,7 @@
 						</td>
 
 						<td><input class="form-control" id="ex2" type="number"
-							th:field="*{yta}"></input></td>
+							th:field="*{yta}" required="true"></input></td>
 						<td><p th:text="${typer.enhet}" th:unless="${typer==null}"></p>
 						</td>
 						<td><input type="checkbox" th:field="*{chbox}"></input></td>
@@ -123,15 +123,17 @@
 					<td th:text="${item.getDelNamn()}"></td>
 					<td th:text="${item.getTypNamn()}"></td>
 					<td th:text="${item.getYta() + item.getTyp().getEnhet()}"></td>
-					
+
 					<td th:text="${item.getChbox()}"></td>
 					<td th:text="${item.getApris()+ ' kr/' + item.getTyp().getEnhet()}"></td>
-					<td th:text="${item.getKostnad()+ ' kr/' + item.getTyp().getEnhet()}"></td>
+					<td
+						th:text="${item.getKostnad()+ ' kr/' + item.getTyp().getEnhet()}"></td>
 					<td th:text="${item.getTyp().getIntervallAr()}"></td>
 					<td></td>
 					<td></td>
 					<td th:text="${item.getTyp().getKommentar()}"></td>
-					<td><a class="btn btn-danger" th:href="@{|/delete/${item.id}|}">Ta bort</a></td>
+					<td><a class="btn btn-danger"
+						th:href="@{|/delete/${item.id}|}">Ta bort</a></td>
 				</tr>
 
 			</tbody>
