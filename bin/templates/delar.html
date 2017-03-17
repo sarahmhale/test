@@ -131,6 +131,7 @@
 					<td></td>
 					<td></td>
 					<td th:text="${item.getTyp().getKommentar()}"></td>
+					<td><a class="btn btn-danger" th:href="@{|/delete/${item.id}|}">Ta bort</a></td>
 				</tr>
 
 			</tbody>

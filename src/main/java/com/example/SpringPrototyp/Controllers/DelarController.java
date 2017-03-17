@@ -27,6 +27,7 @@ import com.example.SpringPrototyp.Components.Typ;
 @Controller
 @RequestMapping("")
 public class DelarController {
+	private Integer counterID= 0;
 
 	@Autowired
 	private DelRepository repository;
@@ -50,12 +51,32 @@ public class DelarController {
 
 	}
 
-	@RequestMapping(value = "/delete/{name}", method = RequestMethod.GET)
+	/**@RequestMapping(value = "/delete/{name}", method = RequestMethod.GET)
 	public @ResponseBody void deleteDel(@PathVariable("name") String name){
 		Del del = repository.findByName(name);
 		repository.delete(del.getId());
 
+	}*/
+
+	@RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
+	public String deleteDel(@PathVariable("id") String id,HttpSession session){
+		System.out.println(id);
+
+		List<BasketItem> basketItems = (List<BasketItem>) session.getAttribute("basketitems");
+		System.out.println(basketItems.size());
+		basketItems.remove(Integer.parseInt(id));
+		
+		System.out.println(basketItems.size());
+
+		session.removeAttribute("basketitems");
+
+		//session.setAttribute("basketitems", basketItems);
+		counterID--;
+		
+		return "redirect:/delar";
+
 	}
+
 
 	@RequestMapping(value = "/{delNamn}",method = RequestMethod.GET)
 	public String getDelTypes(@PathVariable("delNamn") String delNamn,HttpSession session,Model model){
@@ -85,7 +106,8 @@ public class DelarController {
 		// create the basket item from the form values
 		BasketItem item = new BasketItem((String)session.getAttribute("del"),typ.getName(),yta,typ);
 		item.setChbox(checkbox);	
-
+		item.setId(counterID);
+		counterID++;
 		session.removeAttribute("del");
 		session.removeAttribute("typ");
 

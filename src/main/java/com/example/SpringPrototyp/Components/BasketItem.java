@@ -1,8 +1,8 @@
 package com.example.SpringPrototyp.Components;
 
 public class BasketItem {
-	
-    String delNamn;
+	private Integer id;
+	String delNamn;
     String typNamn;
     Integer yta;
     Boolean chbox = false;
@@ -10,6 +10,14 @@ public class BasketItem {
     Integer aPris;
     Integer kostnad;
     Business business = new Business();
+    
+    public Integer getId() {
+ 		return id;
+ 	}
+
+ 	public void setId(Integer id) {
+ 		this.id = id;
+ 	}
     
     public BasketItem(){
     	
