@@ -25,12 +25,14 @@ import com.example.SpringPrototyp.Repositories.DelRepository;
 
 
 @Controller
-@RequestMapping("")
+@RequestMapping("/delar")
 public class DelarController {
 	private Integer counterID= 0;
 
 	@Autowired
 	private DelRepository repository;
+	
+
 
 
 	@RequestMapping(value="", method = RequestMethod.GET)

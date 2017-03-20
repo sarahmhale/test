@@ -1,6 +1,7 @@
 package com.example.SpringPrototyp.Components;
 
 public class BasketItem {
+	
 	private Integer id;
 	String delNamn;
     String typNamn;
@@ -31,7 +32,6 @@ public class BasketItem {
 		this.typ = typ;
 
 	}
-
     public Integer getApris(){
     	
     	if(this.chbox){
