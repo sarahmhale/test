@@ -21,7 +21,7 @@ import com.example.SpringPrototyp.Repositories.TypRepository;
 
 @Controller
 
-@RequestMapping("/typer")
+@RequestMapping("/delar/typer")
 public class TypController {
 
 	@Autowired

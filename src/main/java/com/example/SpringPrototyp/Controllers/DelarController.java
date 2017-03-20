@@ -20,30 +20,31 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.example.SpringPrototyp.Components.BasketItem;
 import com.example.SpringPrototyp.Components.Del;
+import com.example.SpringPrototyp.Components.Grunddata;
 import com.example.SpringPrototyp.Components.Typ;
 import com.example.SpringPrototyp.Repositories.DelRepository;
 
 
 @Controller
-@RequestMapping("/delar")
+@RequestMapping("")
 public class DelarController {
+	
 	private Integer counterID= 0;
 
 	@Autowired
 	private DelRepository repository;
-	
 
-
-
-	@RequestMapping(value="", method = RequestMethod.GET)
+	@RequestMapping(value="/delar", method = RequestMethod.GET)
 	public String listDelar(Model model, HttpSession session){
+	
 		model.addAttribute("basketitem", new BasketItem());
 		session.setAttribute("delar", repository.findAll());
+	
 
 		return "/delar";	
 	}
-	
-	@RequestMapping(value = "/{name}", method = RequestMethod.PUT)
+
+	@RequestMapping(value = "/delar/{name}", method = RequestMethod.PUT)
 	public @ResponseBody Del addDel(@PathVariable("name") String name,
 			@RequestBody List<String> typNamn){
 
@@ -62,27 +63,27 @@ public class DelarController {
 	}*/
 
 	//Deletes basketitem from the http session. 
-	
+
 	@RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
 	public String deleteDel(@PathVariable("id") String id,HttpSession session){
-		
+
 		List<BasketItem> basketItems = (List<BasketItem>) session.getAttribute("basketitems");
-		
+
 		for (BasketItem basketItem : basketItems) {
 			if(basketItem.getId()==Integer.parseInt(id)){
 				basketItems.remove(basketItem);
 				session.setAttribute("basketitems", basketItems);
 				break;
 			}
-			
+
 		}
-		
+
 		return "redirect:/delar";
 
 	}
 
 
-	@RequestMapping(value = "/{delNamn}",method = RequestMethod.GET)
+	@RequestMapping(value = "/delar/{delNamn}",method = RequestMethod.GET)
 	public String getDelTypes(@PathVariable("delNamn") String delNamn,HttpSession session,Model model){
 		model.addAttribute("basketitem", new BasketItem());
 
@@ -113,7 +114,7 @@ public class DelarController {
 		session.removeAttribute("del");
 		session.removeAttribute("typ");
 		counterID++;
-		
+
 		//add the basket item to the list in the session
 		List<BasketItem> basketItems = (List<BasketItem>) session.getAttribute("basketitems") ;
 		basketItems.add(item);

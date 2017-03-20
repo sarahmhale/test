@@ -16,36 +16,37 @@
 		<h2>Grunddata</h2>
 		<p>Fyll i formulär nedanför</p>
 
-		<form th:action="@{/delar}">
+		<form th:action="@{/nyGrunddata}" th:object="${grunddata}"
+			method="get">
 
 			<div class="col-xs-4">
 				<div class="form-group">
-					<label>Email address</label> <input type="text"
-						class="form-control"></input>
+					<label>Adress</label> <input type="text" th:field="*{adress}"
+						class="form-control" required="true"></input>
 				</div>
 				<div class="form-group">
 					<label>Fastighetsbeteckning</label> <input type="text"
-						class="form-control"></input>
+						class="form-control" th:field="*{fastighetsbetckning}" required="true"></input>
 				</div>
 				<div class="form-group">
-					<label>Byggår</label> <input type="number" class="form-control"></input>
+					<label>Byggår</label> <input type="number" class="form-control" th:field="*{byggAr}" required="true"></input>
 				</div>
 				<div class="form-group">
-					<label>Hustyp</label> <select class="form-control">
-						<option>Fristående villa</option>
-						<option>Kedjehus</option>
-						<option>Parhus</option>
-						<option>Radhus</option>
-						<option>lägenhet</option>
+					<label>Hustyp</label> <select class="form-control" th:field="*{husTyp}" required="true" >
+						<option value="fristående Villa">Fristående villa</option>
+						<option value="Kedjehus">Kedjehus</option>
+						<option value="parhus">Parhus</option>
+						<option value="radhus">Radhus</option>
+						<option value="lägenhet">Lägenhet</option>
 					</select>
 				</div>
 
 				<div class="form-group">
-					<label>Antal rum</label> <input type="number" class="form-control"></input>
+					<label>Antal rum</label> <input type="number" class="form-control" th:field="*{rum}" required="true"></input>
 				</div>
 				<div class="form-group">
 					<label>Antal planerade år</label> <input type="text"
-						class="form-control"></input>
+						class="form-control" th:field="*{antalPlaneradeAr}" required="true"></input>
 				</div>
 				<div class="text-right">
 					<input type="submit" class="btn btn-success" value="Nästa"></input>
