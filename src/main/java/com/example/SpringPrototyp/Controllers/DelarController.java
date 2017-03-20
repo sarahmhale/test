@@ -2,6 +2,7 @@ package com.example.SpringPrototyp.Controllers;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.prefs.BackingStoreException;
 
 import javax.servlet.http.HttpSession;
 
@@ -65,10 +66,14 @@ public class DelarController {
 		
 		List<BasketItem> basketItems = (List<BasketItem>) session.getAttribute("basketitems");
 		
-		basketItems.remove(Integer.parseInt(id));
-		session.removeAttribute("basketitems");
-
-		counterID--;
+		for (BasketItem basketItem : basketItems) {
+			if(basketItem.getId()==Integer.parseInt(id)){
+				basketItems.remove(basketItem);
+				session.setAttribute("basketitems", basketItems);
+				break;
+			}
+			
+		}
 		
 		return "redirect:/delar";
 

@@ -36,7 +36,6 @@ public class TypController {
 	}
 	@RequestMapping( value = "/{typNamn}", method = RequestMethod.GET)
 	public String getInfoForTyp(@PathVariable("typNamn") String typNamn, Model model,HttpSession session){
-		System.out.println("typnamn: "+ typNamn);
 		
 		model.addAttribute("basketitem", new BasketItem());
 		if(typRepository.findByName(typNamn)!= null){
@@ -45,7 +44,6 @@ public class TypController {
 			session.setAttribute("typ", typNamn );
 			
 		}
-		System.out.println(model.containsAttribute("typer"));
 		
 		return "/delar";
 
