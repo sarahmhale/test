@@ -2,7 +2,6 @@ package com.example.SpringPrototyp.Controllers;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.prefs.BackingStoreException;
 
 import javax.servlet.http.HttpSession;
 
@@ -20,7 +19,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.example.SpringPrototyp.Components.BasketItem;
 import com.example.SpringPrototyp.Components.Del;
-import com.example.SpringPrototyp.Components.Grunddata;
+
 import com.example.SpringPrototyp.Components.Typ;
 import com.example.SpringPrototyp.Repositories.DelRepository;
 
@@ -28,7 +27,7 @@ import com.example.SpringPrototyp.Repositories.DelRepository;
 @Controller
 @RequestMapping("")
 public class DelarController {
-	
+
 	private Integer counterID= 0;
 
 	@Autowired
@@ -36,10 +35,10 @@ public class DelarController {
 
 	@RequestMapping(value="/delar", method = RequestMethod.GET)
 	public String listDelar(Model model, HttpSession session){
-	
+
 		model.addAttribute("basketitem", new BasketItem());
 		session.setAttribute("delar", repository.findAll());
-	
+
 
 		return "/delar";	
 	}
@@ -55,18 +54,12 @@ public class DelarController {
 
 	}
 
-	/**@RequestMapping(value = "/delete/{name}", method = RequestMethod.GET)
-	public @ResponseBody void deleteDel(@PathVariable("name") String name){
-		Del del = repository.findByName(name);
-		repository.delete(del.getId());
-
-	}*/
-
-	//Deletes basketitem from the http session. 
+	//Deletes basketitem from the list of basketitems in the session. 
 
 	@RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
 	public String deleteDel(@PathVariable("id") String id,HttpSession session){
 
+		@SuppressWarnings("unchecked")
 		List<BasketItem> basketItems = (List<BasketItem>) session.getAttribute("basketitems");
 
 		for (BasketItem basketItem : basketItems) {
@@ -95,9 +88,10 @@ public class DelarController {
 		return "/delar";
 	}
 
-
+	//Creates a session with a list of all the "basketitems" the user has created.
 	@RequestMapping(value = "/new", method = RequestMethod.GET)
-	public String addToBasket(@RequestParam("yta") Integer yta, @RequestParam(value="chbox" , required=false) boolean checkbox,HttpSession session) {
+	public String addToBasket(@RequestParam("yta") Integer yta, @RequestParam(value="chbox" , required=false) boolean checkbox,
+			@RequestParam("senasteAtgard") Integer senasteAtgard,HttpSession session) {
 
 		// check if basketitems already in session. if not create empty list and add to session
 		if (session.getAttribute("basketitems") == null ) {
@@ -109,6 +103,7 @@ public class DelarController {
 
 		// create the basket item from the form values
 		BasketItem item = new BasketItem((String)session.getAttribute("del"),typ.getName(),yta,typ);
+		item.setSenasteAtgard(senasteAtgard);
 		item.setChbox(checkbox);	
 		item.setId(counterID);
 		session.removeAttribute("del");
@@ -116,11 +111,21 @@ public class DelarController {
 		counterID++;
 
 		//add the basket item to the list in the session
+		@SuppressWarnings("unchecked")
 		List<BasketItem> basketItems = (List<BasketItem>) session.getAttribute("basketitems") ;
 		basketItems.add(item);
 
 
 		return "redirect:/delar";
 	}
+	
+	//Delete from mongo, for future use.
+	
+	/**@RequestMapping(value = "/delete/{name}", method = RequestMethod.GET)
+	public @ResponseBody void deleteDel(@PathVariable("name") String name){
+		Del del = repository.findByName(name);
+		repository.delete(del.getId());
+
+	}*/
 
 }

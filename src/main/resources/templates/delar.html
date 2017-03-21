@@ -15,14 +15,13 @@
 <body>
 	<div class="container">
 		<h1>Inmatning</h1>
-		<form th:action="@{/new}" th:object="${basketitem}"
-			method="get">
+		<form th:action="@{/new}" th:object="${basketitem}" method="get">
 			<table class="table " id="del_list">
 				<thead>
 					<tr>
 						<th>Del</th>
-						<th>Typ/antal</th>
-						<th>Yta</th>
+						<th>Typ</th>
+						<th>Yta/Antal</th>
 						<th>Enhet</th>
 						<th>Hantverkare</th>
 						<th>Intervall år</th>
@@ -81,8 +80,11 @@
 						<td><input type="checkbox" th:field="*{chbox}"></input></td>
 						<td><p th:text="${typer.intervallAr}"
 								th:unless="${typer==null}"></p></td>
-						<td></td>
-						<td><p th:text="${typer.materialInklMoms}"
+						<td><input class="form-control" id="ex2" type="number"
+							th:field="*{senasteAtgard}" required="true"
+							th:placeholder="${session.grunddata.getByggAr()}"></input></td>
+						<td><p
+								th:text="${typer.materialInklMoms+' kr/'+ typer.enhet}"
 								th:unless="${typer==null}"></p></td>
 						<td th:text="${typer.getKommentar()}" th:unless="${typer==null}"></td>
 
@@ -129,8 +131,8 @@
 					<td
 						th:text="${item.getKostnad()+ ' kr/' + item.getTyp().getEnhet()}"></td>
 					<td th:text="${item.getTyp().getIntervallAr()}"></td>
-					<td></td>
-					<td></td>
+					<td th:text="${item.getSenasteAtgard()}"></td>
+					<td th:text="${item.getPlaneradAtgard()}"></td>
 					<td th:text="${item.getTyp().getKommentar()}"></td>
 					<td><a class="btn btn-danger"
 						th:href="@{|/delete/${item.id}|}">Ta bort</a></td>
@@ -138,6 +140,12 @@
 
 			</tbody>
 		</table>
+		<br></br> <br></br> <br></br> <br></br>
+		<div class="text-center">
+			<a class="btn btn-success" th:href="@{|/summera|}">Summera</a>
+
+		</div>
+
 	</div>
 
 </body>

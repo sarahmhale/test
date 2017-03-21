@@ -8,10 +8,23 @@ public class BasketItem {
     Integer yta;
     Boolean chbox = false;
     Typ typ;
-    Integer aPris;
+    Integer senasteAtgard;
+	Integer aPris;
     Integer kostnad;
     Business business = new Business();
     
+    public Integer getPlaneradAtgard(){
+    
+    	return business.nextAtgardsAr(senasteAtgard, typ);
+    }
+     
+    public Integer getSenasteAtgard() {
+  		return senasteAtgard;
+  	}
+
+  	public void setSenasteAtgard(Integer senasteAtgard) {
+  		this.senasteAtgard = senasteAtgard;
+  	}
     public Integer getId() {
  		return id;
  	}

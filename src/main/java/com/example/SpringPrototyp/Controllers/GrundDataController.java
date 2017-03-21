@@ -1,7 +1,5 @@
 package com.example.SpringPrototyp.Controllers;
 
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
@@ -11,9 +9,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.example.SpringPrototyp.Components.BasketItem;
 import com.example.SpringPrototyp.Components.Grunddata;
-import com.example.SpringPrototyp.Components.Typ;
+
 
 @Controller
 @RequestMapping("")
@@ -31,6 +28,7 @@ public class GrundDataController {
 	public String listDelar(@RequestParam("adress") String adress,@RequestParam("byggAr") Integer byggAr,
 			@RequestParam("fastighetsbetckning") String fastighetsbetckning,@RequestParam("husTyp") String husTyp,
 			@RequestParam("rum") Integer rum, @RequestParam("antalPlaneradeAr") Integer antalPlaneradeAr,Model model, HttpSession session){
+		
 		Grunddata grunddata= new Grunddata();
 		grunddata.setAdress(adress);
 		grunddata.setFastighetsbetckning(fastighetsbetckning);

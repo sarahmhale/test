@@ -12,8 +12,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.SessionAttributes;
-
 import com.example.SpringPrototyp.Components.BasketItem;
 import com.example.SpringPrototyp.Components.Typ;
 import com.example.SpringPrototyp.Repositories.TypRepository;
@@ -43,10 +41,8 @@ public class TypController {
 			session.setAttribute("typInfo", typRepository.findByName(typNamn) );
 			session.setAttribute("typ", typNamn );
 			
-		}
-		
+		}	
 		return "/delar";
-
 	}
 	
 	@RequestMapping(value = "/{name}", method = RequestMethod.PUT)
