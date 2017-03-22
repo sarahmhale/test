@@ -112,7 +112,7 @@ public class DelarController {
 
 		//add the basket item to the list in the session
 		@SuppressWarnings("unchecked")
-		List<BasketItem> basketItems = (List<BasketItem>) session.getAttribute("basketitems") ;
+		List<BasketItem> basketItems = (List<BasketItem>) session.getAttribute("basketitems");
 		basketItems.add(item);
 
 
